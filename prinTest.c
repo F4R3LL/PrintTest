@@ -7,17 +7,16 @@
 #include <bluetooth/bluetooth.h>
 #include <bluetooth/rfcomm.h>
 
-int main(int argc, char **argv)
+int	main()
 {
-  printf("\t\t-- LOGS  --\n\tMODEL.NO : MP-B30\n\tCall Systems : socket(), connect(), write()\n\n");
+  printf("\t\t-- LOGS  --\n\tMODEL.NO : YOUR MODEL\n\tCall Systems : socket(), connect(), write()\n\n");
 
-  struct sockaddr_rc addr = { 0 };
-  int s, status;
-  char err[256];
+  struct sockaddr_rc	addr = { 0 };
+  int			s, status;
+  char			err[256];
 
   // BD_ADDR
-  //  char dest[18] = "88:6B:0F:99:1B:14";		// BD_ADDR MP-B30
-   char dest[18] = "E4:7F:B2:FD:78:05";	// BD_ADDR MP-B20
+  char dest[18] = "00:00:00:00:00:00";	// BD_ADDR
 
   // allocate a socket
   if ((s = socket(AF_BLUETOOTH, SOCK_STREAM, BTPROTO_RFCOMM)) != -1)
@@ -27,7 +26,7 @@ int main(int argc, char **argv)
 
   // set the connection parameters (who to connect to)
   addr.rc_family = AF_BLUETOOTH;
-  addr.rc_channel = (uint8_t) 1;
+  addr.rc_channel = (uint8_t) 1; // Check your channel -> sdptool browse 00:00:00:00:00:00 | egrep "Service Name:|Channel:"
   str2ba( dest, &addr.rc_bdaddr );
 
   // connect to printer
